@@ -1,0 +1,10 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:BlogPosts:list{% endblock %}
+
+{% block body %}
+<h1>Welcome to the BlogPosts:list page</h1>
+{% for post in blogPosts %}
+	<li>{{post.title}}</li>
+{% endfor %}
+{% endblock %}
