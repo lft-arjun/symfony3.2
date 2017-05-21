@@ -4,7 +4,26 @@
 
 {% block body %}
 <h1>Welcome to the BlogPosts:list page</h1>
-{% for post in blogPosts %}
-	<li>{{post.title}}</li>
-{% endfor %}
+<table class="table table-hover table-responsive">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Title</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for post in blogPosts %}
+		<tr>
+			<td>{{post.title}}</td>
+			<td>{{post.body}}</td>
+			<td>
+				<a href="{{ path('edit', {'blogPost': post.id } )  }}" class="btn btn-default btn-small">Edit</a>
+				<a href="{{ path('delete', {'blogPost': post.id } )  }}" class="btn btn-danger btn-small">Delete</a>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
 {% endblock %}
