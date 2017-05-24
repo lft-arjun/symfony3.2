@@ -24,6 +24,10 @@
         "symfony/swiftmailer-bundle": "^2.3.10",
         "symfony/symfony": "3.2.*",
         "twig/twig": "^1.0||^2.0",
+        "nelmio/cors-bundle": "^1.4",
+        "nelmio/api-doc-bundle": "^2.11",
+        "friendsofsymfony/rest-bundle": "^1.7",
+        "jms/serializer-bundle": "^1.1",
         "willdurand/faker-bundle": "@stable"
     },
     "require-dev": {

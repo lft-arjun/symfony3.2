@@ -1,0 +1,4 @@
+blog_posts:
+    type: rest
+    prefix: api
+    resource: AppBundle\Controller\BlogPostsController

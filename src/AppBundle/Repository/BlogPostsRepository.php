@@ -12,10 +12,37 @@ class BlogPostsRepository extends \Doctrine\ORM\EntityRepository
 {
 	public function findAllOrderedByTitle()
     {
-        return $this->getEntityManager()
-            ->createQuery(
+        return $this->_em->createQuery(
                 'SELECT b FROM AppBundle:BlogPosts b ORDER BY b.title ASC'
             )
             ->getResult();
     }
+
+    public function createFindOneByIdQuery(int $id)
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT bp
+            FROM AppBundle:BlogPosts bp
+            WHERE bp.id = :id
+            "
+        );
+
+        $query->setParameter('id', $id);
+
+        return $query;
+    }
+    public function createFindAllQuery()
+    {
+        $query = $this->_em->createQuery(
+            "
+            SELECT bp
+            FROM AppBundle:BlogPosts bp
+            "
+        );
+
+
+        return $query;
+    }
+    
 }
