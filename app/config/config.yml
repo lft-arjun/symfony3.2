@@ -9,6 +9,7 @@ parameters:
     locale: en
 
 framework:
+    translator: ~
     #esi: ~
     #translator: { fallbacks: ['%locale%'] }
     secret: '%secret%'
@@ -68,3 +69,17 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+apy_data_grid:
+    limits: [20, 50, 100]
+    persistence: false
+    actions_columns_size: 50
+    theme: 'APYDataGridBundle::blocks.html.twig'
+    no_data_message: "No data"
+    no_result_message: "No result"
+    actions_columns_size: -1
+    actions_columns_title: "Actions"
+    actions_columns_separator: "<br />"
+    pagerfanta:
+        enable: false
+        view_class: Pagerfanta\View\TwitterBootstrapView,

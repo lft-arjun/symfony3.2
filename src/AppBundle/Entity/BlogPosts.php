@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 
 /**
  * BlogPosts
@@ -18,6 +19,9 @@ class BlogPosts
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @GRID\Column(title="ID", size="2", type="text")
+     * 
      */
     private $id;
 

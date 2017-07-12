@@ -1,0 +1,8 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:BlogPosts:list{% endblock %}
+
+{% block body %}
+{{ grid_search(grid) }}
+{{ grid(grid) }}
+{% endblock %}

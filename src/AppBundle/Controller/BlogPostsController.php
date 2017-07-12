@@ -7,6 +7,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\BlogPostsType;
 use AppBundle\Entity\BlogPosts;
+use APY\DataGridBundle\Grid\Source\Entity;
+use APY\DataGridBundle\Grid\Export\CSVExport;
+use APY\DataGridBundle\Grid\Action\RowAction;
 
 class BlogPostsController extends Controller
 {
@@ -15,10 +18,28 @@ class BlogPostsController extends Controller
      */
     public function listAction()
     {
-    	$em = $this->getDoctrine()->getEntityManager();
-    	// $blogPosts = $em->getRepository('AppBundle:BlogPosts')->findAll();
-    	$blogPosts = $em->getRepository('AppBundle:BlogPosts')->findAllOrderedByTitle();
-        return $this->render('AppBundle:BlogPosts:list.html.twig', ['blogPosts' => $blogPosts]);
+    	// $em = $this->getDoctrine()->getEntityManager();
+    	// // $blogPosts = $em->getRepository('AppBundle:BlogPosts')->findAll();
+    	// $blogPosts = $em->getRepository('AppBundle:BlogPosts')->findAllOrderedByTitle();
+     //    return $this->render('AppBundle:BlogPosts:list.html.twig', ['blogPosts' => $blogPosts]);
+        $source = new Entity('AppBundle:BlogPosts');
+
+        // Get a Grid instance
+        $grid = $this->get('grid');
+
+        // Attach the source to the grid
+        $grid->setSource($source);
+        $grid->setId('blog_post_grid');
+        $grid->addExport(new CSVExport('CSV Export'));
+        $rowAction2 = new RowAction('Edit', 'blog_post_edit',true, '_self', array('class' => 'grid_edit_action'));
+        $rowAction2->setRouteParameters(array('id'));
+        $grid->addRowAction($rowAction2);
+        $rowActionDel = new RowAction('Delete', 'blog_post_delete',true, '_self', array('class' => 'grid_delete_action'));
+        $rowActionDel->setRouteParameters(array('id'));
+        $grid->addRowAction($rowActionDel);
+
+        // Return the response of the grid to the template
+        return $grid->getGridResponse('AppBundle:BlogPosts:listgrid.html.twig');
     }
     /**
     * @param Request $request
@@ -43,14 +64,15 @@ class BlogPostsController extends Controller
 
      /**
      * @param Request  $request
-     * @param BlogPost $blogPost
+     * @param BlogPosts $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Route("/edit/{blogPost}", name="edit")
+     * @Route("/edit/{id}", name="blog_post_edit")
      */
-    public function editAction(Request $request, BlogPosts $blogPost)
+    public function editAction(Request $request, BlogPosts $id)
     {
-        $form = $this->createForm(BlogPostsType::class, $blogPost);
+        
+        $form = $this->createForm(BlogPostsType::class, $id);
 
         $form->handleRequest($request);
 
@@ -66,18 +88,18 @@ class BlogPostsController extends Controller
     }
      /**
      * @param Request  $request
-     * @param BlogPost $blogPost
+     * @param BlogPosts $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Route("/delete/{blogPost}", name="delete")
+     * @Route("/delete/{id}", name="blog_post_delete")
      */
-    public function deleteAction(Request $request, BlogPosts $blogPost)
+    public function deleteAction(Request $request, BlogPosts $id)
     {
-        if ($blogPost ==null) {
+        if ($id ==null) {
             return $this->redirectToRoute('list');
         }
         $em = $this->getDoctrine()->getEntityManager();
-        $em->remove($blogPost);
+        $em->remove($id);
         $em->flush();
         return $this->redirectToRoute('list');
     }
