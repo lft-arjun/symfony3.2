@@ -25,6 +25,7 @@
         "symfony/swiftmailer-bundle": "^2.3.10",
         "symfony/symfony": "3.2.*",
         "twig/twig": "^1.0||^2.0",
+        "white-october/pagerfanta-bundle": "^1.0",
         "willdurand/faker-bundle": "@stable"
     },
     "require-dev": {
